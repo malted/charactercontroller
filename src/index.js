@@ -34,7 +34,7 @@ export class CharacterController {
 		this.player = new THREE.Group();
 		this.clock = new THREE.Clock();
 		this.camera = new THREE.PerspectiveCamera(
-			75,
+			this.cameraFov,
 			window.innerWidth / window.innerHeight,
 			0.1,
 			1000
