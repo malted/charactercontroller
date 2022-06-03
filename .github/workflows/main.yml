@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  Lint:
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install npm packages
+        run: npm ci
+        
+      - name: Lint code
+        run: npm run lint
