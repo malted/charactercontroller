@@ -48,12 +48,14 @@ export default class CharacterController {
 		);
 		this.player.add(this.camera);
 
+        /* Using keyCodes because event.key would be
+        affected by modifier keys such as shift. */
 		this.keysDown = {
-			w: false,
-			a: false,
-			s: false,
-			d: false,
-			" ": false,
+			87: false, // w
+			65: false, // a
+			83: false, // s
+			68: false, // d
+			32: false, // space
 		};
 		this.mouse = { x: 0, y: 0 };
 
@@ -64,10 +66,10 @@ export default class CharacterController {
 		this.wasGroundedLastFrame;
 
 		document.addEventListener("keydown", (e) => {
-			this.keysDown[e.key] = true;
+			this.keysDown[e.keyCode] = true;
 		});
 		document.addEventListener("keyup", (e) => {
-			this.keysDown[e.key] = false;
+			this.keysDown[e.keyCode] = false;
 		});
 
 		this.raycaster = new Raycaster(
@@ -92,12 +94,12 @@ export default class CharacterController {
 
 	GetAxis(axis) {
 		if (axis === "Horizontal") {
-			if (this.keysDown["a"]) return -1;
-			if (this.keysDown["d"]) return 1;
+			if (this.keysDown[65]) return -1;
+			if (this.keysDown[68]) return 1;
 			return 0;
 		} else if (axis === "Vertical") {
-			if (this.keysDown["w"]) return 1;
-			if (this.keysDown["s"]) return -1;
+			if (this.keysDown[87]) return 1;
+			if (this.keysDown[83]) return -1;
 			return 0;
 		} else {
 			throw new Error("No axis supplied");
@@ -136,7 +138,7 @@ export default class CharacterController {
 			this.player.children[0].rotation.x = MathUtils.degToRad(this.lookLimit.up);
 		}
 
-		if (this.keysDown[" "] && this.isGrounded) {
+		if (this.keysDown[32] && this.isGrounded) {
 			this.isJumping = true;
 		}
 
