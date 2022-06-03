@@ -121,23 +121,12 @@ export class CharacterController {
 
 		this.player.rotation.z += -this.mouse.x * delta * this.sensitivity.x;
 
-		this.player.children[0].rotation.x -=
-			this.mouse.y * delta * this.sensitivity.y;
+		this.player.children[0].rotation.x -= this.mouse.y * delta * this.sensitivity.y;
 
-		if (
-			this.player.children[0].rotation.x <
-			THREE.Math.degToRad(this.lookLimit.down)
-		) {
-			this.player.children[0].rotation.x = THREE.Math.degToRad(
-				this.lookLimit.down
-			);
-		} else if (
-			this.player.children[0].rotation.x >
-			THREE.Math.degToRad(this.lookLimit.up)
-		) {
-			this.player.children[0].rotation.x = THREE.Math.degToRad(
-				this.lookLimit.up
-			);
+		if (this.player.children[0].rotation.x < THREE.Math.degToRad(this.lookLimit.down)) {
+			this.player.children[0].rotation.x = THREE.Math.degToRad(this.lookLimit.down);
+		} else if (this.player.children[0].rotation.x > THREE.Math.degToRad(this.lookLimit.up)) {
+			this.player.children[0].rotation.x = THREE.Math.degToRad(this.lookLimit.up);
 		}
 
 		if (this.keysDown[" "] && this.isGrounded) {
