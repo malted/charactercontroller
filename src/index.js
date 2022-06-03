@@ -1,4 +1,11 @@
-import * as THREE from "three";
+import {
+	Group,
+	Clock,
+	PerspectiveCamera,
+	Raycaster,
+	Vector3,
+	MathUtils
+} from "three";
 
 export class CharacterController {
 	constructor(
@@ -31,9 +38,9 @@ export class CharacterController {
 		this.lookLimit = lookLimit;
 		this.cameraFov = cameraFov;
 
-		this.player = new THREE.Group();
-		this.clock = new THREE.Clock();
-		this.camera = new THREE.PerspectiveCamera(
+		this.player = new Group();
+		this.clock = new Clock();
+		this.camera = new PerspectiveCamera(
 			this.cameraFov,
 			window.innerWidth / window.innerHeight,
 			0.1,
@@ -63,9 +70,9 @@ export class CharacterController {
 			this.keysDown[e.key] = false;
 		});
 
-		this.raycaster = new THREE.Raycaster(
+		this.raycaster = new Raycaster(
 			this.player.position,
-			new THREE.Vector3(0, 0, -1),
+			new Vector3(0, 0, -1),
 			0,
 			this.floorDistance
 		);
@@ -100,7 +107,7 @@ export class CharacterController {
 	update() {
 		const delta = this.clock.getDelta();
 
-		this.raycaster.set(this.player.position, new THREE.Vector3(0, 0, -1));
+		this.raycaster.set(this.player.position, new Vector3(0, 0, -1));
 
 		if (this.raycaster.intersectObjects(this.scene.children, true).length < 1) {
 			this.player.position.z -= delta * this.gravity;
@@ -123,10 +130,10 @@ export class CharacterController {
 
 		this.player.children[0].rotation.x -= this.mouse.y * delta * this.sensitivity.y;
 
-		if (this.player.children[0].rotation.x < THREE.Math.degToRad(this.lookLimit.down)) {
-			this.player.children[0].rotation.x = THREE.Math.degToRad(this.lookLimit.down);
-		} else if (this.player.children[0].rotation.x > THREE.Math.degToRad(this.lookLimit.up)) {
-			this.player.children[0].rotation.x = THREE.Math.degToRad(this.lookLimit.up);
+		if (this.player.children[0].rotation.x < MathUtils.degToRad(this.lookLimit.down)) {
+			this.player.children[0].rotation.x = MathUtils.degToRad(this.lookLimit.down);
+		} else if (this.player.children[0].rotation.x > MathUtils.degToRad(this.lookLimit.up)) {
+			this.player.children[0].rotation.x = MathUtils.degToRad(this.lookLimit.up);
 		}
 
 		if (this.keysDown[" "] && this.isGrounded) {
