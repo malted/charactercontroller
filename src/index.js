@@ -7,7 +7,7 @@ import {
 	MathUtils
 } from "three";
 
-export class CharacterController {
+export default class CharacterController {
 	constructor(
 		scene,
 		{
