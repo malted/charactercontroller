@@ -12,6 +12,8 @@ A first person character controller for the Three.js graphics library
 
 ## Usage
 ```javascript
+import CharacterController from "charactercontroller";
+
 new CharacterController(scene, options);
 ```
 * `scene`
