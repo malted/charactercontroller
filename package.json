@@ -1,6 +1,6 @@
 {
   "name": "charactercontroller",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A first person character controller for the Three.js graphics library",
   "main": "src/index.js",
   "scripts": {
@@ -29,5 +29,8 @@
   },
   "dependencies": {
     "three": "^0.141.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry-url"
   }
 }
