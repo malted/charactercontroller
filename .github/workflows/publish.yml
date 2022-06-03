@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js (NPM)
         uses: actions/setup-node@master
         with:
-          node-version: '12.x'
+          node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node.js (GPR)
         uses: actions/setup-node@master
         with:
-          node-version: '12.x'
+          node-version: '16.x'
           registry-url: https://npm.pkg.github.com/
           scope: '${{ env.actor_name }}'
 
