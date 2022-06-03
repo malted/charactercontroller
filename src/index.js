@@ -146,5 +146,7 @@ export class CharacterController {
 
 		this.mouseLastFrame = { ...this.mouse };
 		this.wasGroundedLastFrame = this.isGrounded;
+
+		return delta;
 	}
 }
