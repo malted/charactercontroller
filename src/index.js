@@ -86,16 +86,17 @@ export default class CharacterController {
 	}
 
 	GetAxis(axis) {
-		if (axis === "Horizontal") {
-			if (this.keysDown[65]) return -1;
-			if (this.keysDown[68]) return 1;
-			return 0;
-		} else if (axis === "Vertical") {
-			if (this.keysDown[87]) return 1;
-			if (this.keysDown[83]) return -1;
-			return 0;
-		} else {
-			throw new Error("No axis supplied");
+		switch (axis) {
+			case "Horizontal":
+				if (this.keysDown[65]) return -1;
+				if (this.keysDown[68]) return 1;
+				return 0;
+			case "Vertical":
+				if (this.keysDown[87]) return 1;
+				if (this.keysDown[83]) return -1;
+				return 0;
+			default:
+				throw new Error("No axis supplied");
 		}
 	}
 
