@@ -1,11 +1,4 @@
-import {
-	Group,
-	Clock,
-	PerspectiveCamera,
-	Raycaster,
-	Vector3,
-	MathUtils
-} from "three";
+import { Group, Clock, PerspectiveCamera, Raycaster, Vector3, MathUtils } from "three";
 
 export default class CharacterController {
 	constructor(
@@ -48,7 +41,7 @@ export default class CharacterController {
 		);
 		this.player.add(this.camera);
 
-        /* Using keyCodes because event.key would be
+		/* Using keyCodes because event.key would be
         affected by modifier keys such as shift. */
 		this.keysDown = {
 			87: false, // w
