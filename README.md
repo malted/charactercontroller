@@ -7,6 +7,8 @@ A first person character controller for the Three.js graphics library
 ![npm](https://img.shields.io/npm/v/charactercontroller)
 ![NPM](https://img.shields.io/npm/l/charactercontroller)
 
+## [Demo](https://controller.malted.dev)
+
 ## Installation
 `npm install charactercontroller`
 
