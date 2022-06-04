@@ -107,7 +107,9 @@ export default class CharacterController {
 	}
 
 	update() {
-		const delta = this.clock.getDelta();
+		const clock = this.clock;
+		const elapsed = this.clock.elapsedTime;
+		const delta = clock.getDelta();
 
 		this.raycaster.set(this.player.position, new Vector3(0, 0, -1));
 
@@ -156,6 +158,6 @@ export default class CharacterController {
 		this.mouseLastFrame = { ...this.mouse };
 		this.wasGroundedLastFrame = this.isGrounded;
 
-		return delta;
+		return { elapsed, delta };
 	}
 }
