@@ -87,16 +87,16 @@ export default class CharacterController {
 
 	GetAxis(axis) {
 		switch (axis) {
-			case "Horizontal":
-				if (this.keysDown[65]) return -1;
-				if (this.keysDown[68]) return 1;
-				return 0;
-			case "Vertical":
-				if (this.keysDown[87]) return 1;
-				if (this.keysDown[83]) return -1;
-				return 0;
-			default:
-				throw new Error("No axis supplied");
+		case "Horizontal":
+			if (this.keysDown[65]) return -1;
+			if (this.keysDown[68]) return 1;
+			return 0;
+		case "Vertical":
+			if (this.keysDown[87]) return 1;
+			if (this.keysDown[83]) return -1;
+			return 0;
+		default:
+			throw new Error("No axis supplied. Valid axes are 'Horizontal' and 'Vertical'.");
 		}
 	}
 
