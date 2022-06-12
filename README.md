@@ -1,7 +1,8 @@
 # charactercontroller
 A first person character controller for the Three.js graphics library
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ma1ted/charactercontroller/CI)
+![GitHub Lint Workflow Status](https://img.shields.io/github/workflow/status/ma1ted/charactercontroller/CI?label=Lint)
+![GitHub Publish Workflow Status](https://img.shields.io/github/workflow/status/ma1ted/charactercontroller/Publish?label=Publish)
 
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/charactercontroller)
 ![npm](https://img.shields.io/npm/v/charactercontroller)
@@ -16,7 +17,15 @@ A first person character controller for the Three.js graphics library
 ```javascript
 import CharacterController from "charactercontroller";
 
-new CharacterController(scene, options);
+// Scene & renderer initialisation
+const controller = new CharacterController(scene, options);
+
+function animate() {
+  requestAnimationFrame(animate);
+  controller.update();
+  // ...
+  renderer.render(scene, controller.player.children[0]);
+}
 ```
 * `scene`
   + An instance of `THREE.Scene` that the Character Controller is to become a child of.
@@ -25,10 +34,12 @@ new CharacterController(scene, options);
   + An object defining options for the Character Controller. The valid fields are described below
 
 ## Constructor Options
-* `speed`
-  + The rate at which the controller is translated in the scene in response to player inputs.
-  + Can be interpreted as the speed at which the controller walks.
+* `walkSpeed`
+  + The rate at which the controller is translated in the scene in response to player inputs, when the sprint key (left shift) **is not** being pressed.
   + Default: `5`
+* `sprintSpeed`
+  + The rate at which the controller is translated in the scene in response to player inputs, when the sprint key (left shift) **is** being pressed.
+  + Default: `10`
 * `floorDistance`
   + How far above a surface the controller can get before stopping falling.
   + Could be interpreted as the height of the player.

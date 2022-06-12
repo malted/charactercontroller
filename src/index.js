@@ -97,7 +97,7 @@ export default class CharacterController {
 		if (this.keysDown.KeyS) return -1;
 		return 0;
 	}
-	get shiftIsDown() {
+	shiftIsDown() {
 		return this.keysDown.ShiftLeft;
 	}
 
@@ -106,10 +106,11 @@ export default class CharacterController {
 		const elapsed = this.clock.elapsedTime;
 		const delta = clock.getDelta();
 
-		console.log(this.horizontal);
-
+		// Cast an invisible ray straight down to check if the player is touching the ground
 		this.raycaster.set(this.player.position, new Vector3(0, 0, -1));
 
+		// If the list of scene objects the ray intersects with is not empty,
+		// the player is touching the ground
 		if (this.raycaster.intersectObjects(this.scene.children, true).length < 1) {
 			this.player.position.z -= delta * this.gravity;
 			this.isGrounded = false;
@@ -118,27 +119,32 @@ export default class CharacterController {
 			this.isJumping = false;
 		}
 
+		// If the player has just landed, reset the jump tracking variables
 		if (this.isGrounded && !this.wasGroundedLastFrame) {
 			this.jumpFrameCounter = 0;
 			this.isJumping = false;
 			this.easedLastFrame = 0;
 		}
 
-		const speed = this.shiftIsDown ? this.sprintSpeed : this.walkSpeed;
-
+		// Move the player
+		const speed = this.shiftIsDown() ? this.sprintSpeed : this.walkSpeed;
 		this.player.translateX(this.horizontalAxis * speed * delta);
 		this.player.translateY(this.verticalAxis * speed * delta);
 
+		// Rotate the player left and right
 		this.player.rotation.z += -this.mouse.x * delta * this.sensitivity.x;
 
+		// Rotate the camera up and down
 		this.player.children[0].rotation.x -= this.mouse.y * delta * this.sensitivity.y;
 
+		// Clamp the up and down camera movement
 		if (this.player.children[0].rotation.x < MathUtils.degToRad(this.lookLimit.down)) {
 			this.player.children[0].rotation.x = MathUtils.degToRad(this.lookLimit.down);
 		} else if (this.player.children[0].rotation.x > MathUtils.degToRad(this.lookLimit.up)) {
 			this.player.children[0].rotation.x = MathUtils.degToRad(this.lookLimit.up);
 		}
 
+		// Start a jump is the space bar is pressed and the player is on the ground.
 		if (this.keysDown.Space && this.isGrounded) {
 			this.isJumping = true;
 		}
