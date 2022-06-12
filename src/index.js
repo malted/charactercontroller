@@ -4,7 +4,8 @@ export default class CharacterController {
 	constructor(
 		scene,
 		{
-			speed = 5,
+			walkSpeed = 5,
+			sprintSpeed = 10,
 			floorDistance = 1,
 			gravity = 9.8,
 			jumpPower = 8,
@@ -22,7 +23,8 @@ export default class CharacterController {
 	) {
 		this.scene = scene;
 
-		this.speed = speed;
+		this.walkSpeed = walkSpeed;
+		this.sprintSpeed = sprintSpeed;
 		this.floorDistance = floorDistance;
 		this.gravity = gravity;
 		this.jumpPower = jumpPower;
@@ -41,15 +43,15 @@ export default class CharacterController {
 		);
 		this.player.add(this.camera);
 
-		/* Using keyCodes because event.key would be
-        affected by modifier keys such as shift. */
 		this.keysDown = {
-			87: false, // w
-			65: false, // a
-			83: false, // s
-			68: false, // d
-			32: false, // space
+			KeyW: false,
+			KeyA: false,
+			KeyS: false,
+			KeyD: false,
+			Space: false,
+			ShiftLeft: false,
 		};
+		console.log(this.keysDown);
 		this.mouse = { x: 0, y: 0 };
 
 		this.jumpFrameCounter = 0;
@@ -59,10 +61,10 @@ export default class CharacterController {
 		this.wasGroundedLastFrame;
 
 		document.addEventListener("keydown", (e) => {
-			this.keysDown[e.keyCode] = true;
+			this.keysDown[e.code] = true;
 		});
 		document.addEventListener("keyup", (e) => {
-			this.keysDown[e.keyCode] = false;
+			this.keysDown[e.code] = false;
 		});
 
 		this.raycaster = new Raycaster(
@@ -85,25 +87,26 @@ export default class CharacterController {
 		this.clock.start();
 	}
 
-	GetAxis(axis) {
-		switch (axis) {
-		case "Horizontal":
-			if (this.keysDown[65]) return -1;
-			if (this.keysDown[68]) return 1;
-			return 0;
-		case "Vertical":
-			if (this.keysDown[87]) return 1;
-			if (this.keysDown[83]) return -1;
-			return 0;
-		default:
-			throw new Error("No axis supplied. Valid axes are 'Horizontal' and 'Vertical'.");
-		}
+	get horizontalAxis() {
+		if (this.keysDown.KeyA) return -1;
+		if (this.keysDown.KeyD) return 1;
+		return 0;
+	}
+	get verticalAxis() {
+		if (this.keysDown.KeyW) return 1;
+		if (this.keysDown.KeyS) return -1;
+		return 0;
+	}
+	get shiftIsDown() {
+		return this.keysDown.ShiftLeft;
 	}
 
 	update() {
 		const clock = this.clock;
 		const elapsed = this.clock.elapsedTime;
 		const delta = clock.getDelta();
+
+		console.log(this.horizontal);
 
 		this.raycaster.set(this.player.position, new Vector3(0, 0, -1));
 
@@ -121,8 +124,10 @@ export default class CharacterController {
 			this.easedLastFrame = 0;
 		}
 
-		this.player.translateX(this.GetAxis("Horizontal") * this.speed * delta);
-		this.player.translateY(this.GetAxis("Vertical") * this.speed * delta);
+		const speed = this.shiftIsDown ? this.sprintSpeed : this.walkSpeed;
+
+		this.player.translateX(this.horizontalAxis * speed * delta);
+		this.player.translateY(this.verticalAxis * speed * delta);
 
 		this.player.rotation.z += -this.mouse.x * delta * this.sensitivity.x;
 
@@ -134,7 +139,7 @@ export default class CharacterController {
 			this.player.children[0].rotation.x = MathUtils.degToRad(this.lookLimit.up);
 		}
 
-		if (this.keysDown[32] && this.isGrounded) {
+		if (this.keysDown.Space && this.isGrounded) {
 			this.isJumping = true;
 		}
 
