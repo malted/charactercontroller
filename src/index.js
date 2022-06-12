@@ -19,6 +19,14 @@ export default class CharacterController {
 				up: 180,
 			},
 			cameraFov = 75,
+			inputs = {
+				forwards: ["KeyW", "ArrowUp"],
+				backwards: ["KeyS", "ArrowDown"],
+				left: ["KeyA", "ArrowLeft"],
+				right: ["KeyD", "ArrowRight"],
+				jump: ["Space"],
+				sprint: ["ShiftLeft", "ShiftRight"],
+			}
 		}
 	) {
 		this.scene = scene;
@@ -32,6 +40,7 @@ export default class CharacterController {
 		this.sensitivity = sensitivity;
 		this.lookLimit = lookLimit;
 		this.cameraFov = cameraFov;
+		this.inputs = inputs;
 
 		this.player = new Group();
 		this.clock = new Clock();
@@ -43,15 +52,7 @@ export default class CharacterController {
 		);
 		this.player.add(this.camera);
 
-		this.keysDown = {
-			KeyW: false,
-			KeyA: false,
-			KeyS: false,
-			KeyD: false,
-			Space: false,
-			ShiftLeft: false,
-		};
-		console.log(this.keysDown);
+		this.keysDown = {};
 		this.mouse = { x: 0, y: 0 };
 
 		this.jumpFrameCounter = 0;
@@ -88,17 +89,31 @@ export default class CharacterController {
 	}
 
 	get horizontalAxis() {
-		if (this.keysDown.KeyA) return -1;
-		if (this.keysDown.KeyD) return 1;
-		return 0;
+        let res = 0;
+		this.inputs.left.forEach(key => {
+			if (this.keysDown[key]) res = -1;
+		});
+		this.inputs.right.forEach(key => {
+			if (this.keysDown[key]) res = 1;
+		});
+		return res;
 	}
 	get verticalAxis() {
-		if (this.keysDown.KeyW) return 1;
-		if (this.keysDown.KeyS) return -1;
-		return 0;
+        let res = 0;
+		this.inputs.forwards.forEach(key => {
+			if (this.keysDown[key]) res = 1;
+		});
+		this.inputs.backwards.forEach(key => {
+			if (this.keysDown[key]) res = -1;
+		});
+		return res;
 	}
-	shiftIsDown() {
-		return this.keysDown.ShiftLeft;
+	get sprintKeyPressed() {
+        let res = false;
+		this.inputs.sprint.forEach(key => {
+			if (this.keysDown[key]) res = true;
+		});
+		return res;
 	}
 
 	update() {
@@ -127,7 +142,7 @@ export default class CharacterController {
 		}
 
 		// Move the player
-		const speed = this.shiftIsDown() ? this.sprintSpeed : this.walkSpeed;
+		const speed = this.sprintKeyPressed ? this.sprintSpeed : this.walkSpeed;
 		this.player.translateX(this.horizontalAxis * speed * delta);
 		this.player.translateY(this.verticalAxis * speed * delta);
 

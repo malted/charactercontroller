@@ -71,3 +71,17 @@ function animate() {
 * `cameraFov`
   + The field of view of the camera attatched to the character controller.
   + Default: `75`
+* `inputs`
+  + The `KeyboardEvent.code`s that control the character controller. An array of `code`s are used to support multiple keys controlling the same actions; primarily for accessability reasons.
+  + `forwards`
+    - Default: [`KeyW`, `ArrowUp`]
+  + `backwards`
+    - Default: [`KeyS`, `ArrowDown`]
+  + `left`
+    - Default: [`KeyA`, `ArrowLeft`]
+  + `right`
+    - Default: [`KeyD`, `ArrowRight`]
+  + `jump`
+    - Default: [`Space`]
+  + `sprint`
+    - Default: [`ShiftLeft`, `ShiftRight`]
