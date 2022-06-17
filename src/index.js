@@ -1,3 +1,18 @@
+/* TOOD
+	Add support for game controllers
+	https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API
+
+	Add support for touch
+	https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
+
+	Other input methods for increased accessability?
+
+	Improve ground detection:
+		- Instead of not pulling the player down if there is floor below,
+		  push the player up parallel to the normal of the floor, maybe by
+		  the amount the player is intersecting with the object?
+*/
+
 import { Group, Clock, PerspectiveCamera, Raycaster, Vector3, MathUtils } from "three";
 
 export default class CharacterController {
@@ -26,7 +41,7 @@ export default class CharacterController {
 				right: ["KeyD", "ArrowRight"],
 				jump: ["Space"],
 				sprint: ["ShiftLeft", "ShiftRight"],
-			}
+			},
 		}
 	) {
 		this.scene = scene;
@@ -89,28 +104,28 @@ export default class CharacterController {
 	}
 
 	get horizontalAxis() {
-        let res = 0;
-		this.inputs.left.forEach(key => {
+		let res = 0;
+		this.inputs.left.forEach((key) => {
 			if (this.keysDown[key]) res = -1;
 		});
-		this.inputs.right.forEach(key => {
+		this.inputs.right.forEach((key) => {
 			if (this.keysDown[key]) res = 1;
 		});
 		return res;
 	}
 	get verticalAxis() {
-        let res = 0;
-		this.inputs.forwards.forEach(key => {
+		let res = 0;
+		this.inputs.forwards.forEach((key) => {
 			if (this.keysDown[key]) res = 1;
 		});
-		this.inputs.backwards.forEach(key => {
+		this.inputs.backwards.forEach((key) => {
 			if (this.keysDown[key]) res = -1;
 		});
 		return res;
 	}
 	get sprintKeyPressed() {
-        let res = false;
-		this.inputs.sprint.forEach(key => {
+		let res = false;
+		this.inputs.sprint.forEach((key) => {
 			if (this.keysDown[key]) res = true;
 		});
 		return res;
