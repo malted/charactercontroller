@@ -24,7 +24,7 @@ function animate() {
   requestAnimationFrame(animate);
   controller.update();
   // ...
-  renderer.render(scene, controller.player.children[0]);
+  renderer.render(scene, controller.camera);
 }
 ```
 * `scene`
