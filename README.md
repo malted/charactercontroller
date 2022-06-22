@@ -22,8 +22,8 @@ const controller = new CharacterController(scene, options);
 
 function animate() {
   requestAnimationFrame(animate);
-  controller.update();
   // ...
+  controller.update();
   renderer.render(scene, controller.camera);
 }
 ```
@@ -46,14 +46,10 @@ function animate() {
   + Default: `1`
 * `gravity`
   + How quickly the controller is pulled down when there is no surface beneath it.
-  + Default: `9.8`
+  + Default: `-9.81`
 * `jumpPower`
   + With how much force the controller is projected upwards when a jump is initiated.
-  + Default: `8`
-* `jumpDuration`
-  + How long the player stays in the air during a jump.
-  + Internally this is in frames, however it is recommended that this should be treated as an arbitary unit due to the variable and unpredictable nature of the length of time of an animation frame.
-  + Default: `120`
+  + Default: `5`
 * `sensitivity`
   + `x`
     - How much the camera should move in response to the player moving the mouse left and right.
@@ -85,3 +81,4 @@ function animate() {
     - Default: [`Space`]
   + `sprint`
     - Default: [`ShiftLeft`, `ShiftRight`]
+    
