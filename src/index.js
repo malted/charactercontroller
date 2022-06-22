@@ -1,17 +1,3 @@
-/* TOOD
-	Add support for game controllers
-	https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API
-
-	Add support for touch
-	https://developer.mozilla.org/en-US/docs/Web/API/Touch_events
-
-	Other input methods for increased accessability?
-
-	Procedural input checking. Having functions for every single
-	input action is bad. The usage should be checkInputs(this.inputs.sprint), 
-	for example.
-*/
-
 import { Group, Clock, PerspectiveCamera, Raycaster, Vector3 } from "three";
 import * as PlayerUtils from "./playerUtils.js";
 
