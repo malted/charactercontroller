@@ -1,4 +1,4 @@
-import { Group, Clock, PerspectiveCamera, Raycaster, Vector3 } from "three";
+import { Group, Clock, PerspectiveCamera, Raycaster, Vector3, MathUtils } from "three";
 import * as PlayerUtils from "./playerUtils.js";
 
 export default class CharacterController {
@@ -49,6 +49,7 @@ export default class CharacterController {
 			0.1,
 			1000
 		);
+		this.camera.rotation.x = MathUtils.degToRad(90);
 		this.player.add(this.camera);
 
 		this.keysDown = {};
