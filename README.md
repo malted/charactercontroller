@@ -80,7 +80,7 @@ function animate() {
 
   <!--
     - The `KeyboardEvent.code`s that control the character controller. An array of `code`s are used to support multiple keys controlling the same actions; primarily for accessability reasons.
-  
+
     + `forwards`
       - Default: [`KeyW`, `ArrowUp`]
     + `backwards`
