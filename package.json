@@ -1,36 +1,36 @@
 {
-	"name": "charactercontroller",
-	"version": "3.0.0",
-	"description": "A first person character controller for the Three.js graphics library",
-	"main": "src/index.js",
-	"scripts": {
-		"lint": "eslint src",
-		"format": "prettier --write src"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/ma1ted/charactercontroller.git"
-	},
-	"keywords": [
-		"threejs",
-		"fps",
-		"controller"
-	],
-	"author": "malted",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/ma1ted/charactercontroller/issues"
-	},
-	"homepage": "https://github.com/ma1ted/charactercontroller#readme",
-	"devDependencies": {
-		"eslint": "^8.16.0",
-		"eslint-config-prettier": "^8.5.0",
-		"prettier": "^2.6.2"
-	},
-	"dependencies": {
-		"three": "^0.141.0"
-	},
-	"publishConfig": {
-		"registry": "https://registry-url"
-	}
+  "name": "charactercontroller",
+  "version": "3.0.0",
+  "description": "A first person character controller for the Three.js graphics library",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "format": "prettier --write src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ma1ted/charactercontroller.git"
+  },
+  "keywords": [
+    "threejs",
+    "fps",
+    "controller"
+  ],
+  "author": "malted",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ma1ted/charactercontroller/issues"
+  },
+  "homepage": "https://github.com/ma1ted/charactercontroller#readme",
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "three": "^0.141.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry-url"
+  }
 }
