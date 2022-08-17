@@ -2,9 +2,9 @@ import { MathUtils } from "three";
 
 function playerMove(delta) {
 	// Move the player
-	const speed = this.sprintKeyPressed ? this.sprintSpeed : this.walkSpeed;
-	this.player.translateX(this.horizontalAxis * speed * delta);
-	this.player.translateY(this.verticalAxis * speed * delta);
+	const speed = this.inputs.sprint ? this.sprintSpeed : this.walkSpeed;
+	this.player.translateX(this.inputs.horizontalAxis * speed * delta);
+	this.player.translateY(this.inputs.verticalAxis * speed * delta);
 }
 
 function playerLook(delta) {

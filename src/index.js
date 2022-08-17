@@ -1,6 +1,6 @@
 import { Group, Clock, PerspectiveCamera, Raycaster, Vector3, MathUtils } from "three";
 import * as PlayerUtils from "./playerUtils.js";
-import * as ControllerUtils from "./controllerUtils.js";
+import * as InputUtils from "./inputUtils.js";
 
 export default class CharacterController {
 	constructor(
@@ -79,9 +79,9 @@ export default class CharacterController {
 		);
 
 		this.cancelDriftTimeout;
-		ControllerUtils.registerMouseMoveEvent.call(this);
+		InputUtils.registerMouseMoveEvent.call(this);
 
-		ControllerUtils.registerKeyEvents.call(this);
+		InputUtils.registerKeyEvents.call(this);
 
 		this.clock.start();
 	}
@@ -90,7 +90,9 @@ export default class CharacterController {
 		const clock = this.clock;
 		const elapsed = this.clock.elapsedTime;
 		const delta = clock.getDelta();
-		this.inputs = ControllerUtils.checkInputs(this.inputMappings, this.keysDown);
+
+		// Update the player's currently activated inputs for this frame.
+		InputUtils.checkInputs.call(this);
 
 		// Cast a ray straight down from the player's position.
 		this.raycaster.set(this.player.position, new Vector3(0, 0, -1));
