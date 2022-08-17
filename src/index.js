@@ -1,5 +1,6 @@
 import { Group, Clock, PerspectiveCamera, Raycaster, Vector3, MathUtils } from "three";
 import * as PlayerUtils from "./playerUtils.js";
+import * as InputUtils from "./inputUtils.js";
 
 export default class CharacterController {
 	constructor(
@@ -19,13 +20,21 @@ export default class CharacterController {
 				up: 180,
 			},
 			cameraFov = 75,
-			inputs = {
-				forwards: ["KeyW", "ArrowUp"],
-				backwards: ["KeyS", "ArrowDown"],
-				left: ["KeyA", "ArrowLeft"],
-				right: ["KeyD", "ArrowRight"],
-				jump: ["Space"],
-				sprint: ["ShiftLeft", "ShiftRight"],
+			inputMappings = {
+				scalar: {
+					horizontalAxis: [
+						{ inputs: ["KeyA", "ArrowLeft"], value: -1 },
+						{ inputs: ["KeyD", "ArrowRight"], value: 1 },
+					],
+					verticalAxis: [
+						{ inputs: ["KeyS", "ArrowDown"], value: -1 },
+						{ inputs: ["KeyW", "ArrowUp"], value: 1 },
+					],
+				},
+				discrete: {
+					jump: ["Space"],
+					sprint: ["ShiftLeft", "ShiftRight"],
+				},
 			},
 		}
 	) {
@@ -39,7 +48,7 @@ export default class CharacterController {
 		this.sensitivity = sensitivity;
 		this.lookLimit = lookLimit;
 		this.cameraFov = cameraFov;
-		this.inputs = inputs;
+		this.inputMappings = inputMappings;
 
 		this.player = new Group();
 		this.clock = new Clock();
@@ -52,7 +61,11 @@ export default class CharacterController {
 		this.camera.rotation.x = MathUtils.degToRad(90);
 		this.player.add(this.camera);
 
+		// A raw list of all the keys currently pressed. Internal use only.
 		this.keysDown = {};
+
+		// A processed list of inputs corresponding to the input mappings.
+		this.inputs = {};
 		this.mouse = { x: 0, y: 0 };
 
 		this.isGrounded;
@@ -65,58 +78,21 @@ export default class CharacterController {
 			this.floorDistance
 		);
 
-		document.addEventListener("keydown", (e) => {
-			this.keysDown[e.code] = true;
-		});
-		document.addEventListener("keyup", (e) => {
-			this.keysDown[e.code] = false;
-		});
-
 		this.cancelDriftTimeout;
-		window.addEventListener("mousemove", (e) => {
-			clearTimeout(this.cancelDriftTimeout);
-			this.mouse.x = e.movementX;
-			this.mouse.y = e.movementY;
-			this.cancelDriftTimeout = setTimeout(() => {
-				this.mouse.x = this.mouse.y = 0;
-			}, 10);
-		});
+		InputUtils.registerMouseMoveEvent.call(this);
+
+		InputUtils.registerKeyEvents.call(this);
 
 		this.clock.start();
-	}
-
-	get horizontalAxis() {
-		let res = 0;
-		this.inputs.left.forEach((key) => {
-			if (this.keysDown[key]) res = -1;
-		});
-		this.inputs.right.forEach((key) => {
-			if (this.keysDown[key]) res = 1;
-		});
-		return res;
-	}
-	get verticalAxis() {
-		let res = 0;
-		this.inputs.forwards.forEach((key) => {
-			if (this.keysDown[key]) res = 1;
-		});
-		this.inputs.backwards.forEach((key) => {
-			if (this.keysDown[key]) res = -1;
-		});
-		return res;
-	}
-	get sprintKeyPressed() {
-		let res = false;
-		this.inputs.sprint.forEach((key) => {
-			if (this.keysDown[key]) res = true;
-		});
-		return res;
 	}
 
 	update() {
 		const clock = this.clock;
 		const elapsed = this.clock.elapsedTime;
 		const delta = clock.getDelta();
+
+		// Update the player's currently activated inputs for this frame.
+		InputUtils.checkInputs.call(this);
 
 		// Cast a ray straight down from the player's position.
 		this.raycaster.set(this.player.position, new Vector3(0, 0, -1));
