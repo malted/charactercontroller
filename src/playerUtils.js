@@ -19,8 +19,8 @@ function playerClamp() {
 	// Clamp the up and down camera movement
 	this.camera.rotation.x = MathUtils.clamp(
 		this.camera.rotation.x,
-		this.lookLimit.down,
-		this.lookLimit.up
+		MathUtils.degToRad(this.lookLimit.down),
+		MathUtils.degToRad(this.lookLimit.up)
 	);
 }
 
