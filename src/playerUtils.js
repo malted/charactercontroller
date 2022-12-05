@@ -17,11 +17,11 @@ function playerLook(delta) {
 
 function playerClamp() {
 	// Clamp the up and down camera movement
-	if (this.camera.rotation.x < MathUtils.degToRad(this.lookLimit.down)) {
-		this.camera.rotation.x = MathUtils.degToRad(this.lookLimit.down);
-	} else if (this.camera.rotation.x > MathUtils.degToRad(this.lookLimit.up)) {
-		this.camera.rotation.x = MathUtils.degToRad(this.lookLimit.up);
-	}
+	this.camera.rotation.x = MathUtils.clamp(
+		this.camera.rotation.x,
+		this.lookLimit.down,
+		this.lookLimit.up
+	);
 }
 
 export { playerClamp, playerLook, playerMove };
