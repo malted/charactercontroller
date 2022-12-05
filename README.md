@@ -72,9 +72,11 @@ function animate() {
     	- Default: `0.1`
 - `lookLimit`
 	- `down`
+	
 		> The angle in degrees that the camera's `x` rotation should be clamped to when looking down
 		- Default: `0`
 	- `up`
+	
 		> The angle in degrees that the camera's `x` rotation should be clamped to when looking up
   		- Default: `180`
  
