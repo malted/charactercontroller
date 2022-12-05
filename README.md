@@ -107,8 +107,8 @@ function animate() {
     	+ `verticalAxis`
     		- Default: 
 				```js
-    			{ inputs: ["KeyA", "ArrowLeft"], value: -1 },
-				{ inputs: ["KeyD", "ArrowRight"], value: 1 },
+ 				{ inputs: ["KeyS", "ArrowDown"], value: -1 },
+				{ inputs: ["KeyW", "ArrowUp"], value: 1 },
 				```
 	- `discrete`
 
