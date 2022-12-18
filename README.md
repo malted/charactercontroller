@@ -2,9 +2,6 @@
 
 A first person character controller for the Three.js graphics library
 
-![GitHub Lint Workflow Status](https://img.shields.io/github/workflow/status/ma1ted/charactercontroller/CI?label=Lint)
-![GitHub Publish Workflow Status](https://img.shields.io/github/workflow/status/ma1ted/charactercontroller/Publish?label=Publish)
-
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/charactercontroller)
 ![npm](https://img.shields.io/npm/v/charactercontroller)
 ![NPM](https://img.shields.io/npm/l/charactercontroller)
